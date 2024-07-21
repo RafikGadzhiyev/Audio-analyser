@@ -43,16 +43,16 @@ export default function Visualizer() {
     audioFrameDataBuffer: Uint8Array,
     visualizerColor: string = 'white',
   ) {
-    // If we do not have canvas context then we do not need to "visualize" audio
-    if (!canvasContext.current) {
-      return;
-    }
-
     canvasContext.current?.clearRect(0, 0, CANVAS_CONFIG.WIDTH, CANVAS_CONFIG.HEIGHT)
 
     const BAR_WIDTH = CANVAS_CONFIG.WIDTH / audioFrameDataBuffer.length
 
     for (let i = 0; i < audioFrameDataBuffer.length; ++i) {
+      // If we do not have canvas context then we do not need to "visualize" audio
+      if (!canvasContext.current) {
+        return;
+      }
+
       const barHeight = audioFrameDataBuffer[i]
         || BAR_CONFIG.MIN_HEIGHT
 
@@ -71,17 +71,12 @@ export default function Visualizer() {
         visualizerColor
       )
 
-      // canvasGradient.addColorStop(1, 'transparent')
-      // canvasGradient.addColorStop(0, 'purple')
-
-      canvasContext.current!.fillStyle = canvasGradient
-      canvasContext.current!.lineCap = 'round'
+      canvasContext.current.fillStyle = canvasGradient
 
       canvasContext.current?.beginPath()
       canvasContext.current?.roundRect(
         x, y, BAR_WIDTH, barHeight, [10, 10, 0, 0]
       )
-
       canvasContext.current?.fill()
       canvasContext.current.closePath()
     }

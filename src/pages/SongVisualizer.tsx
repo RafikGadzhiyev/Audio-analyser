@@ -6,6 +6,7 @@ import {createBlobAndGetURL} from "../helpers/system.helper.ts";
 import {getRandomHEX} from "../helpers/color.helper.ts";
 
 import {SourceNode, IVisualizerOutletContext} from "../types.ts";
+import {processDataBuffer} from "../helpers/visualiser.helper.ts";
 
 export default function SongVisualizer() {
   const {
@@ -64,14 +65,10 @@ export default function SongVisualizer() {
   }
 
   function processDataBufferAndVisualize(audioAnalyzer: AnalyserNode) {
-    const bufferLength = audioAnalyzer.frequencyBinCount
-    const buffer = new Uint8Array(bufferLength)
-
-    //current frame buffer data
-    audioAnalyzer.getByteFrequencyData(buffer)
+    const processedBuffer = processDataBuffer(audioAnalyzer)
 
     visualize(
-      buffer,
+      processedBuffer,
       generatedColor.current,
     )
 

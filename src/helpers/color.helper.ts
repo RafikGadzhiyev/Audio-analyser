@@ -1,6 +1,5 @@
 import { getRandomNumberFromRange } from "./system.helper.ts";
 
-
 export function getRandomHEX() {
   const red = getRandomNumberFromRange(0, 256)
   const green = getRandomNumberFromRange(0, 256)
